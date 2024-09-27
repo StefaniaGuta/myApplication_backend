@@ -7,6 +7,10 @@ require("dotenv").config();
 
 
 const authRouter = require("./routes/api/auth");
+const productsRouter = require('./routes/api/products.js');
+const dailyIntakeRouter = require('./routes/api/dailyIntake.js');
+const consumedProductsRouter = require('./routes/api/consumedProducts.js');
+
 
 const connectionString = process.env.MONGO_URI;
 
@@ -39,6 +43,9 @@ app.use(express.static('public'));
 
 
 app.use("/api/auth", authRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/daily-intake', dailyIntakeRouter);
+app.use('/api/consumed-products', consumedProductsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not ok" });

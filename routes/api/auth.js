@@ -48,8 +48,7 @@ router.post("/users/signup", async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error", error });
   }
 });
 
@@ -117,8 +116,7 @@ router.get("/users/current", authMiddleware, async (req, res) => {
     });
 
   } catch (e) {
-    console.log(e);
-    res.status(500).json({message: "Internal Server Error"})
+    res.status(500).json({message: "Internal Server Error", e})
   }
 });
 

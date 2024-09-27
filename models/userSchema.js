@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-});
+},
+{timestamps:true});
 
 userSchema.methods.setPassword = async function (password) {
   this.password = await bcrypt.hash(password, 10);
