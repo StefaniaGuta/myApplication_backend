@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const User = require("../../models/userSchema");
-const Joi = require("joi");
+const User = require("../../models/user");
 require("dotenv").config();
-const authMiddleware = require("../../middlewares/authMiddleware");
+const authMiddleware = require("../../middlewares/auth");
 
 router.post("/users/signup", async (req, res) => {
   const { email, password, name } = req.body;
@@ -34,7 +33,7 @@ router.post("/users/signup", async (req, res) => {
       id: newUser._id,
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
 
     newUser.token = token;
     await newUser.save();
@@ -67,7 +66,7 @@ router.post("/users/login", async (req, res) => {
 
     const payload = { id: user._id };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "3h",
     });
 
     user.token = token;

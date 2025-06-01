@@ -5,12 +5,10 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 require("dotenv").config();
 
-
 const authRouter = require("./routes/api/auth");
 const productsRouter = require('./routes/api/products.js');
-const dailyIntakeRouter = require('./routes/api/dailyIntake.js');
-const consumedProductsRouter = require('./routes/api/consumedProducts.js');
-
+const recommendationRouter = require('./routes/api/recommendations.js');
+const diaryRouter = require('./routes/api/diary.js');
 
 const connectionString = process.env.MONGO_URI;
 
@@ -44,11 +42,11 @@ app.use(express.static('public'));
 
 app.use("/api/auth", authRouter);
 app.use('/api/products', productsRouter);
-app.use('/api/daily-intake', dailyIntakeRouter);
-app.use('/api/consumed-products', consumedProductsRouter);
+app.use('/api/products', recommendationRouter);
+app.use('/api/diary', diaryRouter);
 
 app.use((req, res) => {
-  res.status(404).json({ message: "Not ok" });
+  res.status(404).json({ message: "Not found!" });
 });
 
 app.use((err, req, res, next) => {

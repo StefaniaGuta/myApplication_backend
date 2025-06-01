@@ -1,5 +1,5 @@
 const passportJWT = require("passport-jwt");
-const User = require("../models/userSchema");
+const User = require("../models/user");
 require("dotenv").config();
 
 const ExtractJWT = passportJWT.ExtractJwt;
@@ -17,7 +17,6 @@ module.exports = passport => {
       try {
         const user = await User.findById(payload.id);
         if (user) {
-          console.log('User found:', user);
           return done(null, user);
         } else {
           return done(null, false);
