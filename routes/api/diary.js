@@ -117,13 +117,13 @@ router.get('/consumed/:date', authMiddleware, async (req, res) => {
 
     const inputDate = new Date(date);
     const startDate = new Date(Date.UTC(inputDate.getUTCFullYear(), inputDate.getUTCMonth(), inputDate.getUTCDate()));
-    const endDate = new Date(Date.UTC(inputDate.getUTCFullYear(), inputDate.getUTCMonth(), inputDate.getUTCDate() + 1, 23, 59, 59, 999));
+    const endDate = new Date(Date.UTC(inputDate.getUTCFullYear(), inputDate.getUTCMonth(), inputDate.getUTCDate() + 1, 0, 0, 0));
 
     const diaryEntries = await Diary.findOne({
       userId,
       'entries.date': {
         $gte: startDate,
-        $lte: endDate
+        $lt: endDate
       }
     }).populate({
       path: 'entries.productId', 
@@ -137,9 +137,10 @@ router.get('/consumed/:date', authMiddleware, async (req, res) => {
       });
     }
 
-    const filteredEntries = diaryEntries.entries.filter(entry =>
-      new Date(entry.date).toDateString() === new Date(date).toDateString()
-    );
+    const filteredEntries = diaryEntries.entries.filter(entry => {
+      const entryDateUTC = new Date(entry.date).toISOString().split('T')[0];
+      return entryDateUTC === date;
+    });
 
     return res.status(200).json({
       date,
