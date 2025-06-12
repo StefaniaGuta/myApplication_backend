@@ -39,6 +39,9 @@ require("./config/passport")(passport);
 
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome!' });
+});
 
 app.use("/api/auth", authRouter);
 app.use('/api/products', productsRouter);

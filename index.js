@@ -1,5 +1,5 @@
 const app = require("./app");
 
-app.get("/", (req, res) => {
-  res.send("Backend is working!");
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome!' });
 });
