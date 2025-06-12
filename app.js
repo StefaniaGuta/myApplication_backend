@@ -14,9 +14,7 @@ const connectionString = process.env.MONGO_URI;
 
 mongoose
   .connect(connectionString, {
-    dbName: "productsColection",
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    dbName: "productsColection"
   })
   .then(() => {
     console.log("Database connection successful");
